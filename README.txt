@@ -1,0 +1,1 @@
+This requires youtube-dl installed, unless you already extracted all referenced files into mp3 or ogg files named *[youtube-id].{mp3,ogg}.
