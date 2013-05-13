@@ -49,10 +49,10 @@ for entry in ytfeed.entries:
     links.append({'href': "https://www.youtube.com/watch?v=%s" % ytid, 'rel': 'alternate', 'type': 'text/html'})
     for fn in fns:
         if fn[-3:] == 'ogg':
-            links.append({'href': "%s/%s" % (base_url, fn), 'rel': 'alternate',
+            links.append({'href': "%s/%s" % (base_url, fn), 'rel': 'enclosure',
                          'type': 'audio/ogg; codecs=vorbis', 'length': os.path.getsize(fn)})
         elif fn[-3:] == 'mp3':
-            links.append({'href': "%s/%s" % (base_url, fn), 'rel': 'alternate',
+            links.append({'href': "%s/%s" % (base_url, fn), 'rel': 'enclosure',
                          'type': 'audio/mpeg', 'length': os.path.getsize(fn)})
 
     try:
