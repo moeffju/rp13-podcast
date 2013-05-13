@@ -43,7 +43,7 @@ for entry in ytfeed.entries:
         print >>sys.stderr, "Matched: %s" % ', '.join(fns)
     else:
         print >>sys.stderr, "Downloading: %s" % ytid
-        subprocess.call(['youtube-dl', '--extract-audio', '--audio-format', 'mp3', '-c', '-f', '18', '--', "https://www.youtube.com/watch?v=%s" % ytid])
+        subprocess.call('youtube-dl --extract-audio --audio-format mp3 -c -f 18 -- "https://www.youtube.com/watch?v=%s" >&2' % ytid, shell=True)
         fns = glob('*%s.*' % ytid)
     links = []
     links.append({'href': "https://www.youtube.com/watch?v=%s" % ytid, 'rel': 'alternate', 'type': 'text/html'})
