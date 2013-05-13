@@ -42,6 +42,7 @@ for entry in ytfeed.entries:
     if len(fns) > 0:
         print >>sys.stderr, "Matched: %s" % ', '.join(fns)
     else:
+        print >>sys.stderr, "Downloading: %s" % ytid
         subprocess.call(['youtube-dl', '--extract-audio', '--audio-format', 'mp3', '-c', '-f', '18', '--', "https://www.youtube.com/watch?v=%s" % ytid])
         fns = glob('*%s.*' % ytid)
     links = []
