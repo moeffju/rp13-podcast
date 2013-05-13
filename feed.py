@@ -1,14 +1,15 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import feedparser
 import urllib
 import re
 import sys
 import os
+import subprocess
 from xml.etree.cElementTree import parse, tostring
 from werkzeug.contrib.atom import AtomFeed
 from datetime import datetime
-from uuid import uuid4
 from glob import glob
 
 
@@ -40,6 +41,9 @@ for entry in ytfeed.entries:
     fns = glob('*%s.*' % ytid)
     if len(fns) > 0:
         print >>sys.stderr, "Matched: %s" % ', '.join(fns)
+    else:
+        subprocess.call(['youtube-dl', '--extract-audio', '--audio-format', 'mp3', '-c', '-f', '18', '--', "https://www.youtube.com/watch?v=%s" % ytid])
+        fns = glob('*%s.*' % ytid)
     links = []
     links.append({'href': "https://www.youtube.com/watch?v=%s" % ytid, 'rel': 'alternate', 'type': 'text/html'})
     for fn in fns:
