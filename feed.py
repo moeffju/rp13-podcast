@@ -110,17 +110,17 @@ for ytid, data in known_videos.items():
     if data == {}:
         # print >>sys.stderr, "%s: no data, skipped" % ytid
         continue
+
+    event_id = data['eventId']
+    session_info = get_session_info(event_id)
+
+    print >>sys.stderr, "[%s] %s@%s: \"%s\" (%s)" % (ytid, session_info['start'], session_info['room'][-1:], session_info['title'], event_id)
+
     if data['gesperrt']:
         print >>sys.stderr, "[%s] RESTRICTED, skipping" % ytid
         continue
 
-    event_id = data['eventId']
-
     files = find_files_for_id(ytid)
-    session_info = get_session_info(event_id)
-
-    print >>sys.stderr, "[%s]" % ytid
-    print >>sys.stderr, "[%s] %s: %s, %s: \"%s\" - %s" % (ytid, event_id, session_info['start'], session_info['room'], session_info['title'], ', '.join(session_info['authors']))
 
     try:
         matches = [entry for entry in youtube_feed.entries if entry['id'][-11:] == ytid]
