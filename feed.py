@@ -16,7 +16,7 @@ from glob import glob
 
 
 base_url = 'https://moeffju.net/data/rp13'
-DO_DOWNLOAD = False
+DO_DOWNLOAD = True
 
 
 def get_schedule():
