@@ -16,6 +16,7 @@ from glob import glob
 
 
 base_url = 'https://moeffju.net/data/rp13'
+DO_DOWNLOAD = False
 
 
 def get_schedule():
@@ -40,7 +41,8 @@ def get_known_videos():
 
 def get_youtube_feed(num_results=200):
     print >>sys.stderr, "Fetching YouTube video feed…"
-    feed_urls = ['https://gdata.youtube.com/feeds/api/users/republica2010/uploads?max-results=50&start-index=%s' % i for i in range(0, num_results, 50)]
+    feed_urls = ['https://gdata.youtube.com/feeds/api/users/republica2010/uploads?max-results=50&start-index=%s' %
+                 i for i in range(0, num_results, 50)]
     bar = ProgressBar(len(feed_urls)).start()
     feed_content = ''
     for url in feed_urls:
@@ -80,11 +82,13 @@ def find_files_for_id(video_id):
 
 def get_file_for_id(video_id):
     print >>sys.stderr, "[%s] downloading file" % ytid
-    open('%s.mp3' % video_id, 'w')
-    return True
-    res = subprocess.call(
-        'youtube-dl --extract-audio --audio-format mp3 -c -f 18 -- "https://www.youtube.com/watch?v=%s" >&2' % ytid, shell=True)
-    return res
+    if DO_DOWNLOAD:
+        res = subprocess.call(
+            'youtube-dl --extract-audio --audio-format mp3 -c -f 18 -- "https://www.youtube.com/watch?v=%s" >&2' % ytid, shell=True)
+        return res
+    else:
+        open('%s.mp3' % video_id, 'w')
+        return True
 
 
 youtube_feed = get_youtube_feed()
